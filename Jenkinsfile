@@ -32,12 +32,12 @@ pipeline {
             parallel {
                 stage ('Deploy to Staging') {
                     steps {
-                        bat "scp -o StrictHostKeyChecking=no -i C:/Tools/tomcat.pem **/target/*.war ec2-user@${params.tomcat_dev}:/home/ec2-user/tomcat/webapps"
+                        bat "scp -o StrictHostKeyChecking=no -i C:/Users/chifu/tomcat.pem **/target/*.war ec2-user@${params.tomcat_dev}:/home/ec2-user/tomcat/webapps"
                     }
                 }
                 stage ('Deploy to Production') {
                     steps {
-                        bat "scp -o StrictHostKeyChecking=no -i C:/Tools/tomcat.pem **/target/*.war ec2-user@${params.tomcat_prod}:/home/ec2-user/tomcat/webapps"
+                        bat "scp -o StrictHostKeyChecking=no -i C:/Users/chifu/tomcat.pem **/target/*.war ec2-user@${params.tomcat_prod}:/home/ec2-user/tomcat/webapps"
                     }
                 }
             }
