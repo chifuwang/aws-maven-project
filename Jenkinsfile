@@ -19,30 +19,9 @@ pipeline {
         stage('Build') {
             steps {
                 bat 'mvn clean package'
-            }
-            post {
-                success {
-                    echo 'Archiving...'
-                    archiveArtifacts artifacts: '**/target/*.war'
-                }
+                bat 'docker build . -t tomcatwebapp:$(env.BUILD_ID)'
             }
         }    
-
-        stage ('Deployments') {
-            parallel {
-                stage ('Deploy to Staging') {
-                    steps {
-                        bat "scp -o StrictHostKeyChecking=no -i C:/Users/chifu/Documents/Tools/tomcat.pem **/target/*.war ec2-user@${params.tomcat_dev}:/home/ec2-user/tomcat/webapps"
-                    }
-                }
-                stage ('Deploy to Production') {
-                    steps {
-                        bat "scp -o StrictHostKeyChecking=no -i C:/Users/chifu/Documents/Tools/tomcat.pem **/target/*.war ec2-user@${params.tomcat_prod}:/home/ec2-user/tomcat/webapps"
-                    }
-                }
-            }
-        }
-
     }
 
   
